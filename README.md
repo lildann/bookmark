@@ -12,7 +12,7 @@ As a User
 So that I can see my bookmarks
 I want to be able to view the bookmarks I have in a list
 
-* Noun = BookmarkManager 
+* Noun = Bookmark
 * Verb = view_bookmarks()
 
 ---
