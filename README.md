@@ -43,3 +43,39 @@ I want to be able to add a comment to a bookmark from the list
 
 * Verb = comment
 ```
+
+
+| Component   | Responsibility                                | Refactor                                |
+|------------ |---------------------------------------------  |---------------------------------------- |
+| Model       | Encapsulate logic with relevant data          | Encapsulate bookmark data in a class    |
+| View        | Display the result to a user                  | Show the bookmark data in a list        |
+| Controller  | Get data from the model and put in the view   | Render bookmark data into to the view   |
+
+
+## How to use
+
+### To set up the project
+
+Clone this repository and then run:
+
+```
+bundle
+```
+
+### To run the Bookmark Manager app:
+
+```
+rackup
+```
+
+### To run tests:
+
+```
+rspec
+```
+
+### To run linting:
+
+```
+rubocop
+```
