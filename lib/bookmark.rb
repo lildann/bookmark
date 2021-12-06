@@ -1,9 +1,9 @@
+require 'pg'
+
 class Bookmark
   def self.all
-    [
-      'https://www.channel4.com',
-      'https://www.netflix.com',
-      'https://www.bbc.co.uk/iplayer'
-    ]
+    connection = PG.connect(dbname: 'bookmark_manager')
+    result = connection.exec('SELECT * FROM bookmarks')
+    result.map { |bookmark| bookmark['url'] } # each bookmark is a hash of column/value pairs
   end
 end

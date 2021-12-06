@@ -52,6 +52,22 @@ I want to be able to add a comment to a bookmark from the list
 | Controller  | Get data from the model and put in the view   | Render bookmark data into to the view   |
 
 
+### Interacting with PG in IRB:
+```
+3.0.0 :001 > require 'pg'
+ => true 
+3.0.0 :002 > connection = PG.connect(dbname: 'bookmark_manager')
+ => #<PG::Connection:0x00007fc0e52e8a30> 
+3.0.0 :003 > result = connection.exec('SELECT * FROM bookmarks')
+ => #<PG::Result:0x00007fc0e5258a20 status=PGRES_TUPLES_OK ntuples=3 nfiel... 
+3.0.0 :004 > result.each { |bookmark| p bookmark }
+{"id"=>"4", "url"=>"https://www.channel4.com", "title"=>"Channel 4"}
+{"id"=>"5", "url"=>"https://www.netflix.com", "title"=>"Netflix"}
+{"id"=>"6", "url"=>"https://www.bbc.co.uk/iplayer", "title"=>"BBC iPlayer"}
+ => #<PG::Result:0x00007fc0e5258a20 status=PGRES_TUPLES_OK ntuples=3 nfields=3 cmd_tuples=3> 
+3.0.0 :005 > 
+```
+
 ## How to use
 
 ### To set up the project
@@ -79,3 +95,19 @@ rspec
 ```
 rubocop
 ```
+
+### Instructions for Database Setup and Test Database Setup
+---
+* Connect to psql in the terminal
+* Create the database using the psql command 
+```
+CREATE DATABASE bookmark_manager;
+CREATE DATABASE bookmark_manager_test;
+```
+
+* Connect to the database using the pqsl command 
+```
+\c bookmark_manager;
+```
+* Run the query we have saved in the file 01_create_bookmarks_table.sql
+* Do the same for the bookmark_manager_test db
