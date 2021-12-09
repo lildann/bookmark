@@ -1,4 +1,5 @@
 require 'bookmark'
+require 'database_helpers'
 
 describe Bookmark do
   describe '.all' do # class method so no preceding '#' in description
@@ -21,10 +22,9 @@ describe Bookmark do
   describe '.create' do
     it 'creates a bookmark' do
       bookmark = Bookmark.create(url: 'https://www.itv.com/hub/itv', title: 'ITV')
-      persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
-      
+      persisted_data = persisted_data(id: bookmark.id)
       expect(bookmark).to be_a(Bookmark)
-      expect(bookmark.id).to eq(persisted_data.first['id'])
+      expect(bookmark.id).to eq(persisted_data['id'])
       expect(bookmark.url).to eq('https://www.itv.com/hub/itv')
       expect(bookmark.title).to eq('ITV')
     end
