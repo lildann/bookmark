@@ -8,7 +8,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/' do
-    redirect('/bookmarks')
+    redirect '/bookmarks'
   end
 
   get '/bookmarks' do
@@ -23,7 +23,7 @@ class BookmarkManager < Sinatra::Base
   post '/bookmarks' do
     p params 
     p "Form data submitted to the /bookmarks route!"
-    Bookmark.create(url: params[:url])
+    Bookmark.create(title: params[:title], url: params[:url])
     redirect '/bookmarks'
   end
 

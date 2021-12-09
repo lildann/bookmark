@@ -1,26 +1,32 @@
 require 'bookmark'
 
 describe Bookmark do
-  let(:bookmarks) { Bookmark.all }
   describe '.all' do # class method so no preceding '#' in description
     it 'returns all bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
-
       # Add the test data
-      connection.exec("INSERT INTO bookmarks (url) VALUES('https://www.channel4.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('https://www.netflix.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('https://www.bbc.co.uk/iplayer');")
-
-      expect(bookmarks).to include 'https://www.channel4.com'
-      expect(bookmarks).to include 'https://www.netflix.com'
-      expect(bookmarks).to include 'https://www.bbc.co.uk/iplayer'
+      bookmark = Bookmark.create(url: 'https://www.channel4.com', title: 'Channel 4')
+      Bookmark.create(url: 'https://www.netflix.com', title: 'Netflix')
+      Bookmark.create(url: 'https://www.bbc.co.uk/iplayer', title: 'BBC iPlayer')
+      
+      bookmarks = Bookmark.all
+      expect(bookmarks.length).to eq(3)
+      expect(bookmarks.first).to be_a(Bookmark)
+      expect(bookmarks.first.id).to eq(bookmark.id)
+      expect(bookmarks.first.title).to eq('Channel 4') 
+      expect(bookmarks.first.url).to eq('https://www.channel4.com')
     end
   end
 
   describe '.create' do
     it 'creates a bookmark' do
-      Bookmark.create(url: 'https://www.itv.com/hub/itv')
-      expect(bookmarks).to include('https://www.itv.com/hub/itv')
+      bookmark = Bookmark.create(url: 'https://www.itv.com/hub/itv', title: 'ITV')
+      persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
+      
+      expect(bookmark).to be_a(Bookmark)
+      expect(bookmark.id).to eq(persisted_data.first['id'])
+      expect(bookmark.url).to eq('https://www.itv.com/hub/itv')
+      expect(bookmark.title).to eq('ITV')
     end
   end
 end
