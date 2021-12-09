@@ -98,9 +98,10 @@ rubocop
 
 ### Instructions for Database Setup and Test Database Setup
 ---
-* Connect to psql in the terminal
+* Connect to psql in the terminal 
 * Create the database using the psql command 
 ```
+psql
 CREATE DATABASE bookmark_manager;
 CREATE DATABASE bookmark_manager_test;
 ```
@@ -109,5 +110,4 @@ CREATE DATABASE bookmark_manager_test;
 ```
 \c bookmark_manager;
 ```
-* Run the query we have saved in the file 01_create_bookmarks_table.sql
-* Do the same for the bookmark_manager_test db
+* Run the query saved in the file 01_create_bookmarks_table.sql
