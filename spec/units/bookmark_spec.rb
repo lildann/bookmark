@@ -29,6 +29,14 @@ describe Bookmark do
       expect(bookmark.title).to eq('ITV')
     end
   end
+
+  describe '.delete' do
+    it 'deletes a bookmark' do 
+      bookmark =     Bookmark.create(url: 'https://www.nowtv.com/', title: 'NOW TV')
+      Bookmark.delete(id: bookmark.id)
+      expect(Bookmark.all.length).to eq(0)
+    end
+  end
 end
 
 
