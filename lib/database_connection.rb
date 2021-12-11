@@ -6,7 +6,7 @@ class DatabaseConnection
     # as there is only one DatabaseConnection in the application
   end
 
-  def self.connection
-    @connection
+  def self.query(sql_string, params = [])
+    @connection.exec_params(sql_string, params)
   end
 end
