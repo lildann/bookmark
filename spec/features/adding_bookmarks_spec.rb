@@ -6,4 +6,12 @@ feature 'Adding Bookmarks' do
     click_button('Add Bookmark')
     expect(page).to have_link 'ITV', href: 'https://www.itv.com/hub/itv'
   end
+
+  scenario 'The bookmark must be a valid URL' do
+    visit('/bookmarks/new')
+    fill_in('url', with: 'not a real bookmark')
+    click_button('Add Bookmark')
+    expect(page).not_to have_content "not a real bookmark"
+    expect(page).to have_content "You must submit a valid URL."
+  end
 end

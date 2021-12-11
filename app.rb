@@ -1,10 +1,14 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'sinatra/flash'
+require 'uri'
 require './lib/bookmark'
 require './database_connection_setup'
+require "bundler/setup"
 
 class BookmarkManager < Sinatra::Base
   enable :sessions, :method_override
+  register Sinatra::Flash
 
   configure :development do
     register Sinatra::Reloader
@@ -24,9 +28,11 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    p params 
-    p "Form data submitted to the /bookmarks route!"
-    Bookmark.create(title: params[:title], url: params[:url])
+    if params['url'] =~ /\A#{URI::regexp(['http', 'https'])}\z/
+      Bookmark.create(url: params['url'], title: params[:title])
+    else
+      flash[:notice] = "You must submit a valid URL."
+    end
     redirect '/bookmarks'
   end
 
