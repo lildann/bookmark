@@ -28,6 +28,11 @@ describe Bookmark do
       expect(bookmark.url).to eq('https://www.itv.com/hub/itv')
       expect(bookmark.title).to eq('ITV')
     end
+
+    it 'does not create a new bookmark if the URL is not valid' do
+      Bookmark.create(url: 'not a real bookmark', title: 'not a real bookmark')
+      expect(Bookmark.all).to be_empty
+    end  
   end
 
   describe '.delete' do
