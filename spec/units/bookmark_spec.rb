@@ -2,6 +2,8 @@ require 'bookmark'
 require 'database_helpers'
 
 describe Bookmark do
+  let(:comment_class) { double(:comment_class) }
+
   describe '.all' do # class method so no preceding '#' in description
     it 'returns all bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
@@ -22,9 +24,9 @@ describe Bookmark do
   describe '.create' do
     it 'creates a bookmark' do
       bookmark = Bookmark.create(url: 'https://www.itv.com/hub/itv', title: 'ITV')
-      persisted_data = persisted_data(id: bookmark.id)
+      persisted_data = persisted_data(id: bookmark.id, table: 'bookmarks')
       expect(bookmark).to be_a(Bookmark)
-      expect(bookmark.id).to eq(persisted_data['id'])
+      expect(bookmark.id).to eq(persisted_data.first['id'])
       expect(bookmark.url).to eq('https://www.itv.com/hub/itv')
       expect(bookmark.title).to eq('ITV')
     end
@@ -64,6 +66,14 @@ describe Bookmark do
       expect(result.id).to eq bookmark.id
       expect(result.title).to eq 'YouCube'
       expect(result.url).to eq 'http://www.youcube.com'
+    end
+  end
+
+  describe '#comments' do
+    it 'calls .where on the Comment class' do
+      bookmark = Bookmark.create(title: 'NOW TV', url: 'https://www.nowtv.com/gb/watch/home')
+      expect(comment_class).to receive(:where).with(bookmark_id: bookmark.id)
+      bookmark.comments(comment_class)
     end
   end
 end

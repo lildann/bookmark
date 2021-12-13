@@ -1,3 +1,7 @@
+<form action='/bookmarks/new' method='get'>
+  <input type='submit' value='add a bookmark'>
+</form>
+<%= flash[:notice] %>
 <ul>
 <% @bookmarks.each do |bookmark| %>
   <li class="bookmark" id="bookmark-<%= bookmark.id%>">
@@ -11,11 +15,17 @@
   <form action="/bookmarks/<%=bookmark.id %>/edit" method="get">
     <input type='submit', value ='Edit'>
   </form>
+  <form action="/bookmarks/<%=bookmark.id %>/comments/new" method="get">
+    <input type='submit', value ='Comment'>
+  </form>
+      <ul>
+      <% bookmark.comments.each do |comment| %>
+        <li><%= comment.text %></li>
+      <% end %>
+    </ul>
   </li>
   <% end %>
 </ul>
-<%= flash[:notice] %>
-<br>
-<form action='/bookmarks/new' method='get'>
-  <input type='submit' value='add a bookmark'>
-</form>
+
+
+

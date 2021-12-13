@@ -110,4 +110,4 @@ CREATE DATABASE bookmark_manager_test;
 ```
 \c bookmark_manager;
 ```
-* Run the query saved in the file 01_create_bookmarks_table.sql
+* Run the queries saved in the file numerically, starting with: 01_create_bookmarks_table.sql 
