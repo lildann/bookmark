@@ -6,7 +6,7 @@ describe Bookmark do
 
   describe '.all' do # class method so no preceding '#' in description
     it 'returns all bookmarks' do
-      connection = PG.connect(dbname: 'bookmark_manager_test')
+      # connection = PG.connect(dbname: 'bookmark_manager_test')
       # Add the test data
       bookmark = Bookmark.create(url: 'https://www.channel4.com', title: 'Channel 4')
       Bookmark.create(url: 'https://www.netflix.com', title: 'Netflix')
